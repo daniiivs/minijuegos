@@ -5,6 +5,7 @@ import ChainedPage from "./pages/ChainedPage.jsx"
 import MathPage from "./pages/MathPage.jsx"
 import RememberPage from "./pages/RememberPage.jsx"
 
+// Navegación entre las diferentes páginas
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,7 +31,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-
   return (
     <RouterProvider router={router} />
   );

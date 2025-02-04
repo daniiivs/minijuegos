@@ -2,6 +2,7 @@ import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognitio
 import React, { useState } from "react";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 
+// Lógica del juego de matemáticas
 function MathGame() {
   const [values, setValues] = useState([]); // Valores + resultado
   const [userAnswer, setUserAnswer] = useState(""); // Respuesta del usuario
@@ -18,7 +19,7 @@ function MathGame() {
     generateAddition(); // Generar nueva suma
   }
 
-  // Comprueba si ha dicho un número
+  // Comprueba si el usuario ha dicho un número
   function checkUserNumber(number) {
     if (gameIsOn) {
       number = number.toString().replace(".", "").replace(",", "")
@@ -79,7 +80,7 @@ function MathGame() {
     setValues([sum, correctAnswer]);
   }
 
-  // Comandos
+  // Comandos para el juego
   const commands = [
     {
       command: "Empezar.", callback: () => startNewGame()

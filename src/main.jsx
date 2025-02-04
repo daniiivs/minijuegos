@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
+// Tema personalizado para la app
 const themeOptions = createTheme({
   palette: {
     mode: "light",

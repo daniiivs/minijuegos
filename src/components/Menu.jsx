@@ -20,22 +20,27 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
-
+// Componente menú, común para todas las páginas, que integra la lógica
+// de navegación entre las diferentes páginas mediante comandos de voz
 function Menu(props) {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // Para controlar si el drawer está o no abierto
 
+  // Para abrir el drawer
   const toggleDrawer = (isOpen) => () => {
     setOpen(isOpen);
   };
 
+  // Para navegar al Inicio
   function handleClickHome() {
     navigate("/");
   }
 
+  // Para recoger la página que diga el usuario y navegar
   function handleVoiceAction(page) {
     page = page.toString().toLowerCase();
 
+    // Comprueba qué ha dicho y navega a la página en cuestión
     switch (true) {
       case page.includes("encadenadas"):
         navigate("/chained");
@@ -52,6 +57,7 @@ function Menu(props) {
     }
   }
 
+  // Comandos para la navegación
   const commands = [
     {
       command: "(¿)Ir a (la página) *(?)",
@@ -67,12 +73,13 @@ function Menu(props) {
     }
   ];
   const { transcript, browserSupportsSpeechRecognition } = useSpeechRecognition({ commands });
-  console.log(transcript);
+  console.log(transcript); // Mostramos la transcripción
 
   if (browserSupportsSpeechRecognition) {
     SpeechRecognition.startListening({ continuous: true });
   }
 
+  // El drawer con las diferentes opciones
   const DrawerList = (<Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
     <List>
       <Link to={"/chained"} style={{ textDecoration: "none", color: "inherit" }}>
@@ -128,7 +135,7 @@ function Menu(props) {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {props.page}
             </Typography>
-            {props.page !== "Inicio" ?
+            {props.page !== "Inicio" ? // Hacemos que el icono de inicio solo se muestre si no estamos en la página de inicio
               <IconButton color="inherit" onClick={handleClickHome}>
                 <HomeRoundedIcon />
               </IconButton> :

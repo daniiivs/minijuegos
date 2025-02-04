@@ -2,36 +2,35 @@ import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognitio
 import React, { useState } from "react";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 
+// Lógica del juego de palabras encadenadas
 function ChainedGame() {
-  const [wordList, setWordList] = useState([]); // Lista de palabras dichas
-  const [gameIsOn, setGameIsOn] = useState(false); // Si el juego está en marcha
+  const [wordList, setWordList] = useState([]); // Lista de palabras dichas por el usuario
+  const [gameIsOn, setGameIsOn] = useState(false); // Si el juego está en marcha o no
   const [previousWord, setPreviousWord] = useState(""); // Palabra anterior
   const [currentWord, setCurrentWord] = useState(""); // Palabra actual
   const [score, setScore] = useState(0); // Puntuación
 
   // Empezar un nuevo juego (resetea todos los valores)
   function startNewGame(word) {
-    word = fixWord(word);
+    word = fixWord(word); // "Formateamos" la palabra dicha por el usuario
 
-    wordList.length = 0;
-    wordList.push(removeAccents(word));
+    wordList.length = 0; // Establecemos la longitud de la lista de palabras a 0
+    wordList.push(removeAccents(word)); // Añadimos a la lista la palabra dicha por el usuario sin tildes
 
+    // Establecemos lso valores correspondientes
     setCurrentWord(word);
     setPreviousWord("");
     setWordList(wordList);
     setScore(0);
-
     setGameIsOn(true);
-
-    console.log(wordList);
   }
 
-  // Quita los acentos
+  // Quita las tildes de una palabra
   function removeAccents(word) {
     return word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 
-  // Coge la primera palabra dicha, quita los puntos y comas
+  // Coge la primera palabra dicha y quita los puntos y comas
   function fixWord(word) {
     return word.toString().split(" ")[0].toLowerCase().replace(".", "").replace(",", "");
   }
@@ -53,9 +52,10 @@ function ChainedGame() {
       // Comprueba si las dos primeras letras de la palabra dicha coinciden con las dos últimas de la anterior
       // También comprueba que la palabra no se haya dicho ya
       if (firstLetters(removeAccents(word)) === lastLetters() && !wordList.includes(removeAccents(word))) {
-        setPreviousWord(wordList[wordList.length - 1]);
-        wordList.push(removeAccents(word));
+        setPreviousWord(wordList[wordList.length - 1]); // Actualizamos la palabra previa
+        wordList.push(removeAccents(word)); // Añadimos la nueva palabra
 
+        // Actualizamos los valores
         setCurrentWord(word);
         setWordList(wordList);
         setScore(score + 1)
@@ -74,7 +74,7 @@ function ChainedGame() {
     return word.toString().substring(word.length - 2);
   }
 
-  // Comandos
+  // Comandos para el juego
   const commands = [
     {
       command: "Empezar con *",

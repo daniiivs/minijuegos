@@ -2,6 +2,7 @@ import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognitio
 import React, { useState } from "react";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 
+// Lógica del juego de recordar palabras
 function RememberGame() {
   const [gameIsOn, setGameIsOn] = useState(false); // Si el juego está en marcha
   const [isGuessing, setIsGuessing] = useState(false); // Si el usuario está recordando o no
@@ -39,18 +40,19 @@ function RememberGame() {
   function checkWord(word) {
     if (gameIsOn) {
       word = word.toString().toLowerCase().split(" ")[0].replace(",", "").replace(".", "");
-      if (word === saidWords.split(" ")[currentPosition]) {
-        setUserWords(userWords + " " + word);
-        setCurrentPosition(currentPosition + 1);
-        if (currentPosition === wordCount) {
+      if (word === saidWords.split(" ")[currentPosition]) { // Si la palabra coincide con la que está almacenada en esa posición...
+        setUserWords(userWords + " " + word); // La añade a la lista
+        setCurrentPosition(currentPosition + 1); // Aumenta la posición en 1
+        if (currentPosition === wordCount) { // Si la posición es igual al total de palabras, entonces las ha dicho todas
           setScore(score + 1);
-          newWord();
+          newWord(); // Generamos una nueva palabra
         }
       }
     }
   }
 
-  // Esperar un tiempo determinado
+  // Función con Promise, procesos asíncronos que se pueden invocar más tarde. Sirve
+  // para esperar un tiempo determinado (delay) y luego ejecutar una función (res)
   function timeout(delay) {
     return new Promise(res => setTimeout(res, delay));
   }
@@ -74,7 +76,7 @@ function RememberGame() {
     return Math.floor(Math.random() * maxNumber);
   }
 
-  // Comandos
+  // Comandos para el juego
   const commands = [
     {
       command: "Empezar.",

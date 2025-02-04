@@ -6,17 +6,21 @@ import CalculateRoundedIcon from "@mui/icons-material/CalculateRounded";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 
+// Página de Inicio
 function Home() {
   const navigate = useNavigate();
 
+  // Navegar al hacer click en botón de palabras encadenadas
   function handleClickChained() {
     navigate('/chained')
   }
 
+  // Navegar al hacer click en botón de matemáticas
   function handleClickMath() {
     navigate('/math')
   }
 
+  // Navegar al hacer click en botón de recordar palabras
   function handleClickRemember() {
     navigate('/remember')
   }
